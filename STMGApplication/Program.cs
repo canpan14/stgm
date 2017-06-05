@@ -9,7 +9,7 @@ namespace STMG {
     class Program {
         static void Main(string[] args) {
             GameController gc = new GameController();
-            gc.createNewGame();
+            gc.createNewGame(4);
         }
     }
 }

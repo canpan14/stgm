@@ -7,8 +7,8 @@
     <ProjectGuid>{06FB61E6-098C-4ABB-8618-BEDC14BD2BDF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>STMGApplication</RootNamespace>
-    <AssemblyName>STMGApplication</AssemblyName>
+    <RootNamespace>STMG</RootNamespace>
+    <AssemblyName>STMG</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -67,6 +67,9 @@
     <Compile Include="Card.cs" />
     <Compile Include="CardDeck.cs" />
     <Compile Include="GameController.cs" />
+    <Compile Include="HazardCard.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayerCard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

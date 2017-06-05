@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace STMG {
     public class CardDeck {
-        private Stack<Card> deckList = new Stack<Card>();
+        private Stack<ICard> deckList = new Stack<ICard>();
 
-        public Card drawCard() {
-            Card drawnCard = deckList.Pop();
+        public ICard drawCard() {
+            ICard drawnCard = deckList.Pop();
             return drawnCard;
         }
 
-        public void addCard(Card card) {
+        public void addCard(ICard card) {
             deckList.Push(card);
         }
 

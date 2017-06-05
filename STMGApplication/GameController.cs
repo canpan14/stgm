@@ -10,16 +10,20 @@ namespace STMG {
         private Board gameBoard;
         private CardDeck hazardDeck;
         private CardDeck playerDeck;
+        private List<Player> players = new List<Player>();
 
         // Temporary
-        const int HAZARD_DECK_SIZE = 5;
-        const int PLAYER_DECK_SIZE = 5;
+        const int HAZARD_DECK_SIZE = 60;
+        const int PLAYER_DECK_SIZE = 60;
 
-        public void createNewGame() {
+        public void createNewGame(int numPlayers) {
             gameBoard = new Board(5, 5);
             createHazardDeck();
             createPlayerDeck();
-            // Set up players
+            for(int i = 0; i < numPlayers; i++) {
+                players.Add(new STMG.Player("Test Name", i.ToString()));
+            }
+
             // Pre game setup
             // Roll for turn order
 
@@ -33,8 +37,8 @@ namespace STMG {
             // Will eventually read in deck from somewhere else
             for(int i = 0; i < HAZARD_DECK_SIZE; i++) {
                 Random rnd = new Random();
-                Card cardToAdd = new Card();
-                cardToAdd.cost = rnd.Next();
+                HazardCard cardToAdd = new HazardCard();
+                cardToAdd.name = rnd.Next().ToString();
                 hazardDeck.addCard(cardToAdd);
             }
         }
@@ -44,8 +48,8 @@ namespace STMG {
             // Will eventually read in deck from somewhere else
             for (int i = 0; i < PLAYER_DECK_SIZE; i++) {
                 Random rnd = new Random();
-                Card cardToAdd = new Card();
-                cardToAdd.cost = rnd.Next();
+                PlayerCard cardToAdd = new PlayerCard();
+                cardToAdd.name = rnd.Next().ToString();
                 playerDeck.addCard(cardToAdd);
             }
         }
