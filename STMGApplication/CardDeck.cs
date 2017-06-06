@@ -26,5 +26,14 @@ namespace STMG {
                 deckList.Push(card);
             }
         }
+
+        public void printDeck() {
+            int cardCounter = 1;
+            Console.Write("Deck Size: " + deckList.Count + "\n");
+            foreach(ICard card in deckList) {
+                Console.Write("Card " + cardCounter + ": " + card.getName() + "\n");
+                cardCounter++;
+            }
+        }
     }
 }

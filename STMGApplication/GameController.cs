@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace STMG {
     public class GameController {
@@ -12,45 +15,80 @@ namespace STMG {
         private CardDeck playerDeck;
         private List<Player> players = new List<Player>();
 
-        // Temporary
-        const int HAZARD_DECK_SIZE = 60;
-        const int PLAYER_DECK_SIZE = 60;
+        // Used to decide which cards go into the deck. Card info/amount of each is controlled in the card xmls
+        private String[] HAZARD_DECK_LIST = { "Banana", "SpringBoard" };
+        private String[] PLAYER_DECK_SIZE = { "" };
+
+        private const int STARTING_HAZARD_HAND_SIZE = 5;
 
         public void createNewGame(int numPlayers) {
             gameBoard = new Board(5, 5);
             createHazardDeck();
             createPlayerDeck();
-            for(int i = 0; i < numPlayers; i++) {
-                players.Add(new STMG.Player("Test Name", i.ToString()));
-            }
+            createPlayers(numPlayers);
+            randomTurnOrder();
+            fillPlayerHands();
 
-            // Pre game setup
-            // Roll for turn order
-
+            int roundCounter = 1;
             // Begin Game Loop
+            while (true) {
+                Console.Write("Start of Round " + roundCounter + "\n");
+                foreach (Player p in players) {
+                    p.hazardHand.Add(hazardDeck.drawCard());
+                    Console.Write("Choose card for " + p.playerName + ":" + "\n");
+                    p.displayHazardHand();
+                    String cardOption = Console.ReadLine();
+                    ICard chosenCard = p.hazardHand[Int32.Parse(cardOption) - 1];
+                    p.hazardHand.RemoveAt(Int32.Parse(cardOption) - 1);
+                    Console.Write(p.playerName + " played " + chosenCard.getName() + "\n");
+                    Console.Write("-------------------" + "\n");
 
+                    //var key = Console.ReadKey(true).Key;
+                    //if (key == ConsoleKey.Escape) {
+                    //    break;
+                    //}
+                }
+                roundCounter++;
+            }
             // End Game
         }
 
         private void createHazardDeck() {
             hazardDeck = new CardDeck();
-            // Will eventually read in deck from somewhere else
-            for(int i = 0; i < HAZARD_DECK_SIZE; i++) {
-                Random rnd = new Random();
-                HazardCard cardToAdd = new HazardCard();
-                cardToAdd.name = rnd.Next().ToString();
-                hazardDeck.addCard(cardToAdd);
+            foreach (String hazardCardName in HAZARD_DECK_LIST) {
+                ICard card = (ICard)Activator.CreateInstance(Type.GetType("STMG.HazardCards." + hazardCardName));
+                for (int i = 0; i < card.getNumberInDeck(); i++) {
+                    hazardDeck.addCard(card);
+                }
             }
+            hazardDeck.shuffle();
         }
 
         private void createPlayerDeck() {
             playerDeck = new CardDeck();
-            // Will eventually read in deck from somewhere else
-            for (int i = 0; i < PLAYER_DECK_SIZE; i++) {
-                Random rnd = new Random();
-                PlayerCard cardToAdd = new PlayerCard();
-                cardToAdd.name = rnd.Next().ToString();
-                playerDeck.addCard(cardToAdd);
+            // TODO
+        }
+
+        private void createPlayers(int numPlayers) {
+            for (int i = 0; i < numPlayers; i++) {
+                players.Add(new STMG.Player("Player " + i, i.ToString()));
+            }
+        }
+
+        private void randomTurnOrder() {
+            var tempPlayers = players.ToArray();
+            players.Clear();
+            Random rnd = new Random();
+            foreach (var p in tempPlayers.OrderBy(x => rnd.Next())) {
+                players.Add(p);
+            }
+        }
+
+        private void fillPlayerHands() {
+            for (int i = 0; i < STARTING_HAZARD_HAND_SIZE; i++) {
+                foreach (Player p in players) {
+                    p.hazardHand.Add(hazardDeck.drawCard());
+                }
             }
         }
     }

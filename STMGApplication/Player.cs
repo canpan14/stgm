@@ -17,5 +17,11 @@ namespace STMG {
             playerName = name;
             uniquePlayerID = uniqueID;
         }
+
+        public void displayHazardHand() {
+            for(int i = 0; i < hazardHand.Count; i++) {
+                Console.Write((i+1) + ") " + hazardHand[i].getName() + "\n");
+            }
+        }
     }
 }
