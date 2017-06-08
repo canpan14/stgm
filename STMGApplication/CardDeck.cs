@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace STMG {
     public class CardDeck {
-        private Stack<ICard> deckList = new Stack<ICard>();
+        private Stack<HazardCard> deckList = new Stack<HazardCard>();
 
-        public ICard drawCard() {
-            ICard drawnCard = deckList.Pop();
+        public HazardCard drawCard() {
+            HazardCard drawnCard = deckList.Pop();
             return drawnCard;
         }
 
-        public void addCard(ICard card) {
+        public void addCard(HazardCard card) {
             deckList.Push(card);
         }
 
@@ -30,8 +30,8 @@ namespace STMG {
         public void printDeck() {
             int cardCounter = 1;
             Console.Write("Deck Size: " + deckList.Count + "\n");
-            foreach(ICard card in deckList) {
-                Console.Write("Card " + cardCounter + ": " + card.getName() + "\n");
+            foreach(HazardCard card in deckList) {
+                Console.Write("Card " + cardCounter + ": " + card.name + "\n");
                 cardCounter++;
             }
         }

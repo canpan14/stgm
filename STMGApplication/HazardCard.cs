@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace STMG.HazardCards {
-    class SpringBoard : ICard{
+namespace STMG
+{
+    public class HazardCard
+    {
         public int numberInDeck = 0;
         public String name = "";
         public String type = "";
@@ -18,10 +21,13 @@ namespace STMG.HazardCards {
         public bool endOfTurnDamage = false;
         public bool persistant = false;
         public bool endsMovement = false;
+        public Action[] action;
+        public Direction direction = Direction.NORTH;
 
-        public SpringBoard() {
+        public HazardCard(String cardName)
+        {
             XmlDocument cardInfo = new XmlDocument();
-            cardInfo.Load("..//Resources/HazardCards/SpringBoard.xml");
+            cardInfo.Load("..//..//Cards/HazardCards/" + cardName + ".xml");
             XmlNode numberInDeckNode = cardInfo.DocumentElement.SelectSingleNode("//NumberInDeck");
             XmlNode nameNode = cardInfo.DocumentElement.SelectSingleNode("//Name");
             XmlNode typeNode = cardInfo.DocumentElement.SelectSingleNode("//Type");
@@ -33,6 +39,7 @@ namespace STMG.HazardCards {
             XmlNode endOfTurnNode = cardInfo.DocumentElement.SelectSingleNode("//isEndOfTurnDamage");
             XmlNode persistantNode = cardInfo.DocumentElement.SelectSingleNode("//isPersistant");
             XmlNode endsMovementNode = cardInfo.DocumentElement.SelectSingleNode("//EndsMovement");
+            XmlNode actions = cardInfo.DocumentElement.SelectSingleNode("//Actions");
 
             numberInDeck = Int32.Parse(numberInDeckNode.InnerText);
             name = nameNode.InnerText;
@@ -45,9 +52,11 @@ namespace STMG.HazardCards {
             endOfTurnDamage = Convert.ToBoolean(endOfTurnNode.InnerText);
             persistant = Convert.ToBoolean(persistantNode.InnerText);
             endsMovement = Convert.ToBoolean(endsMovementNode.InnerText);
+            action = xmlToArrayOfCardActions(actions);
         }
 
-        public String cardToString() {
+        public String cardToString()
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append("Name: " + name + "\n");
             sb.Append("NumberInDeck: " + numberInDeck + "\n");
@@ -63,12 +72,15 @@ namespace STMG.HazardCards {
             return sb.ToString();
         }
 
-        public int getNumberInDeck() {
-            return numberInDeck;
-        }
+        private Action[] xmlToArrayOfCardActions(XmlNode actions)
+        {
+            List<Action> actionList = new List<Action>();
+            foreach (XmlNode action in actions)
+            {
+                actionList.Add(new Action(action));
+            }
 
-        public String getName() {
-            return name;
+            return actionList.ToArray();
         }
     }
 }

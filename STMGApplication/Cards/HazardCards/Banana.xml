@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Card>
+  <Name>Banana</Name>
+  <Cost>1</Cost>
+  <Type>Trap</Type>
+  <isPersistant>false</isPersistant>
+  <isInstantDamage>true</isInstantDamage>
+  <isEndOfTurnDamage>false</isEndOfTurnDamage>
+  <EndsMovement>true</EndsMovement>
+  <PrimaryEffect>Take 2 damage and slide to the next space in the direction of travel. If there is no direction of travel player does not slide.</PrimaryEffect>
+  <AlternativeEffect>Take 4 damamge and can no longer move this turn.</AlternativeEffect>
+  <FlavorText>I'm a banana card.</FlavorText>
+  <NumberInDeck>40</NumberInDeck>
+  	<Actions>
+		<Action>
+			<Name>FlatDamageToPlayer</Name>
+			<ActionType>Primary</ActionType>
+			<DamageAmount>4</DamageAmount>
+		</Action>
+		<Action>
+			<Name>StopMovement</Name>
+			<ActionType>Primary</ActionType>
+		</Action>
+		<Action>
+			<Name>FlatDamageToPlayer</Name>
+			<ActionType>Alternative</ActionType>
+			<DamageAmount>2</DamageAmount>
+		</Action>
+		<Action>
+			<Name>MovePlayer</Name>
+			<ActionType>Alternative</ActionType>
+			<Distance>1</Distance>
+			<Direction>MovementDirection</Direction>
+		</Action>
+	</Actions>
+</Card>

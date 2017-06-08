@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Card>
+	<Name>Spring Board</Name>
+	<Cost>1</Cost>
+	<Type>Trap</Type>
+	<isPersistant>false</isPersistant>
+	<isInstantDamage>true</isInstantDamage>
+	<isEndOfTurnDamage>false</isEndOfTurnDamage>
+	<EndsMovement>true</EndsMovement>
+	<PrimaryEffect>Take 2 damage move one space in the direction the top of the card is facing</PrimaryEffect>
+	<AlternativeEffect>NA</AlternativeEffect>
+	<FlavorText>I'm a spring board card.</FlavorText>
+	<NumberInDeck>40</NumberInDeck>
+	<Actions>
+		<Action>
+			<Name>FlatDamageToPlayer</Name>
+			<ActionType>Primary</ActionType>
+			<DamageAmount>2</DamageAmount>
+		</Action>
+		<Action>
+			<Name>MovePlayer</Name>
+			<ActionType>Primary</ActionType>
+			<Distance>1</Distance>
+			<Direction>CardDirection</Direction>
+		</Action>
+	</Actions>
+</Card>

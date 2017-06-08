@@ -10,8 +10,8 @@ namespace STMG {
         public String playerName = "";
         public int health = 20;
         public int money = 0;
-        public List<ICard> hazardHand = new List<ICard>();
-        public List<ICard> playerHand = new List<ICard>();
+        public List<HazardCard> hazardHand = new List<HazardCard>();
+        public List<HazardCard> playerHand = new List<HazardCard>();
 
         public Player(String name, String uniqueID) {
             playerName = name;
@@ -20,7 +20,7 @@ namespace STMG {
 
         public void displayHazardHand() {
             for(int i = 0; i < hazardHand.Count; i++) {
-                Console.Write((i+1) + ") " + hazardHand[i].getName() + "\n");
+                Console.Write((i+1) + ") " + hazardHand[i].name + "\n");
             }
         }
     }

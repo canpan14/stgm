@@ -21,9 +21,34 @@ namespace STMG {
             return gameBoard[x, y];
         }
 
-        public void setTile(int x, int y, BoardTile tile, String directionFacing) {
+        public void addCardToTile(int x, int y, HazardCard cardToAdd, Direction directionFacing) {
             // Impliment directionFacing later using enum or something better
-            gameBoard[x, y] = tile;
+            BoardTile tileToAddTo = gameBoard[x, y];
+            tileToAddTo.addCardHere(cardToAdd, directionFacing);
+            gameBoard[x, y] = tileToAddTo;
+        }
+
+        private void printBoard()
+        {
+
+            int rowLength = gameBoard.GetLength(0);
+            int colLength = gameBoard.GetLength(1);
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < colLength; j++)
+                {
+                    if (gameBoard[i, j].objectsOnTile.Count > 0)
+                    {
+                        Console.Write(string.Format("{0} ", "1"));
+                    } else
+                    {
+                        Console.Write(string.Format("{0} ", "0"));
+                    }
+                }
+                Console.Write(Environment.NewLine + Environment.NewLine);
+            }
+            Console.ReadLine();
         }
     }
 }

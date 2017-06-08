@@ -13,8 +13,14 @@ namespace STMG {
 
         }
 
-        public void addCardHere(ICard card) {
+        public void addCardHere(HazardCard card, Direction directionFacing) {
+            card.direction = directionFacing;
             objectsOnTile.Add(card);
+        }
+
+        public void removeCardHere(HazardCard card)
+        {
+            objectsOnTile.Remove(card);
         }
     }
 }
