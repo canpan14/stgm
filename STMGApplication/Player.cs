@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace STMG {
     public class Player {
-        public String uniquePlayerID = "";
+        public int uniquePlayerID;
         public String playerName = "";
         public int health = 20;
         public int money = 0;
         public List<HazardCard> hazardHand = new List<HazardCard>();
         public List<HazardCard> playerHand = new List<HazardCard>();
 
-        public Player(String name, String uniqueID) {
+        public Player(String name, int uniqueID) {
             playerName = name;
             uniquePlayerID = uniqueID;
         }
