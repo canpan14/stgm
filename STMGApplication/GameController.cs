@@ -34,16 +34,34 @@ namespace STMG {
             int roundCounter = 1;
             // Begin Game Loop
             while (true) {
-                Console.Write("Start of Round " + roundCounter + "\n");
+                Console.Write("Start of Round " + roundCounter + Environment.NewLine);
+                // Will refeactor into multiple methods
                 foreach (Player p in players) {
+                    // Draw Hazard Card
                     p.hazardHand.Add(hazardDeck.drawCard());
-                    Console.Write("Choose card for " + p.playerName + ":" + "\n");
+                    // Ask Player what card they want to play
+                    Console.Write("Choose card for " + p.playerName + ":" + Environment.NewLine);
                     p.displayHazardHand();
                     String cardOption = Console.ReadLine();
+                    // Ask Player where they want to play card (Which row, then which column)
+                    Console.Write("Choose column number to play in (1-5)" + Environment.NewLine);
+                    int columnToPlayIn = Int32.Parse(Console.ReadLine());
+                    Console.Write("Choose row number to play in (1-5)" + Environment.NewLine);
+                    int rowToPlayIn = Int32.Parse(Console.ReadLine());
+                    // Ask Player direction for card to face (North is normal play direction)
+                    Console.Write("Choose direction card faces (North, South, East, West)" + Environment.NewLine);
+                    Direction chosenDirection;
+                    Enum.TryParse(Console.ReadLine().ToUpper(), out chosenDirection);
+                    // Will eventually add logic to change mind about above
+                    // Remove card from hand
                     HazardCard chosenCard = p.hazardHand[Int32.Parse(cardOption) - 1];
                     p.hazardHand.RemoveAt(Int32.Parse(cardOption) - 1);
-                    Console.Write(p.playerName + " played " + chosenCard.name + "\n");
-                    Console.Write("-------------------" + "\n");
+                    // Play card on board
+                    gameBoard.addCardToTile(columnToPlayIn - 1, rowToPlayIn - 1, chosenCard, chosenDirection);
+                    // Show board
+                    gameBoard.printBoard();
+                    Console.Write(p.playerName + " played " + chosenCard.name + Environment.NewLine);
+                    Console.Write("-------------------" + Environment.NewLine);
 
                     //var key = Console.ReadKey(true).Key;
                     //if (key == ConsoleKey.Escape) {

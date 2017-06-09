@@ -18,7 +18,7 @@ namespace STMG
             {
                 if (action.SelectSingleNode("//Type").InnerText.Equals("Primary"))
                 {
-                    Action pAction = new Action();
+                    Action pAction = new Action(action);
                 }
                 else if (action.SelectSingleNode("//Type").InnerText.Equals("Alternative"))
                 {

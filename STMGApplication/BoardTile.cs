@@ -9,6 +9,11 @@ namespace STMG {
     public class BoardTile {
         public List<object> objectsOnTile = new List<object>();
 
+        public BoardTile()
+        {
+
+        }
+
         public void addPlayerHere() {
 
         }

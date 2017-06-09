@@ -15,6 +15,13 @@ namespace STMG {
             width = boardWidth;
             height = boardHeight;
             gameBoard = new BoardTile[width, height];
+            for(int i = 0; i < gameBoard.GetLength(0); i++)
+            {
+                for (int j = 0; j < gameBoard.GetLength(1); j++)
+                {
+                    gameBoard[j, i] = new BoardTile();
+                }
+            }
         }
 
         public BoardTile getTile(int x, int y) {
@@ -28,8 +35,9 @@ namespace STMG {
             gameBoard[x, y] = tileToAddTo;
         }
 
-        private void printBoard()
+        public void printBoard()
         {
+            Console.Write("Current Game Board"+Environment.NewLine);
 
             int rowLength = gameBoard.GetLength(0);
             int colLength = gameBoard.GetLength(1);
@@ -38,7 +46,7 @@ namespace STMG {
             {
                 for (int j = 0; j < colLength; j++)
                 {
-                    if (gameBoard[i, j].objectsOnTile.Count > 0)
+                    if (gameBoard[j, i].objectsOnTile.Count > 0)
                     {
                         Console.Write(string.Format("{0} ", "1"));
                     } else

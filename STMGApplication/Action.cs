@@ -18,9 +18,9 @@ namespace STMG
 
         public void performAction()
         {
-            Type thisType = this.GetType();
-            MethodInfo theMethod = thisType.GetMethod(actionToPerform);
-            theMethod.Invoke(this, null);
+            //Type thisType = this.GetType();
+            //MethodInfo theMethod = thisType.GetMethod(actionToPerform);
+            //theMethod.Invoke(this, null);
         }
 
         private void directDamage(Player p, int damage)
