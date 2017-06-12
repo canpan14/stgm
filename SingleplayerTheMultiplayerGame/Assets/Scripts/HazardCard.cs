@@ -5,9 +5,12 @@ using System.Xml;
 using UnityEngine;
 
 namespace STMG {
-    public class HazardCard : MonoBehaviour {
+    public class HazardCard {
+        public Sprite cardPicture;
+        public GameObject cardModel;
+
         public int numberInDeck = 0;
-        public String name = "";
+        public String cardName = "";
         public String type = "";
         public String primaryEffect = "";
         public String alternativeEffect = "";
@@ -21,6 +24,8 @@ namespace STMG {
         public Direction direction = Direction.NORTH;
 
         public HazardCard(String cardName) {
+            cardPicture = Resources.Load<Sprite>("Assets/Sprites/Cards/HazardCards/" + cardName + ".png");
+
             XmlDocument cardInfo = new XmlDocument();
             cardInfo.Load("Assets/Cards/HazardCards/" + cardName + ".xml");
             XmlNode numberInDeckNode = cardInfo.DocumentElement.SelectSingleNode("//NumberInDeck");
@@ -37,7 +42,7 @@ namespace STMG {
             XmlNode actions = cardInfo.DocumentElement.SelectSingleNode("//Actions");
 
             numberInDeck = Int32.Parse(numberInDeckNode.InnerText);
-            name = nameNode.InnerText;
+            this.cardName = nameNode.InnerText;
             type = typeNode.InnerText;
             primaryEffect = primaryNode.InnerText;
             alternativeEffect = alternitiveNode.InnerText;
@@ -52,7 +57,7 @@ namespace STMG {
 
         public String cardToString() {
             StringBuilder sb = new StringBuilder();
-            sb.Append("Name: " + name + "\n");
+            sb.Append("Name: " + cardName + "\n");
             sb.Append("NumberInDeck: " + numberInDeck + "\n");
             sb.Append("Type: " + type + "\n");
             sb.Append("Primary: " + primaryEffect + "\n");

@@ -4,11 +4,7 @@ using UnityEngine;
 namespace STMG {
 
     public class BoardTile : MonoBehaviour {
-        public List<object> objectsOnTile = new List<object>();
-
-        public BoardTile() {
-
-        }
+        public List<HazardCard> objectsOnTile = new List<HazardCard>();
 
         public void addPlayerHere() {
 

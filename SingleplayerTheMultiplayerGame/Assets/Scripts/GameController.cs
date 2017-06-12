@@ -46,7 +46,7 @@ namespace STMG {
             createPlayers(numPlayers);
             randomTurnOrder();
             fillPlayerHands();
-            Debug.Log(players[0].playerName + ", " + players[1].playerName + ", " + players[2].playerName + ", " + players[3].playerName);
+            Debug.Log("Inital Turn Order: " + players[0].playerName + ", " + players[1].playerName + ", " + players[2].playerName + ", " + players[3].playerName);
             // Start things going
             roundStart();
             cycleStart();

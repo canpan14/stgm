@@ -30,7 +30,7 @@ namespace STMG {
             int cardCounter = 1;
             Console.Write("Deck Size: " + deckList.Count + "\n");
             foreach (HazardCard card in deckList) {
-                Console.Write("Card " + cardCounter + ": " + card.name + "\n");
+                Console.Write("Card " + cardCounter + ": " + card.cardName + "\n");
                 cardCounter++;
             }
         }
