@@ -5,13 +5,13 @@ using System.Xml;
 using UnityEngine;
 
 namespace STMG {
-    public class HazardCard {
+    public class HazardCard : MonoBehaviour {
         public Sprite cardPicture;
         public GameObject cardModel;
 
         public int numberInDeck = 0;
         public String cardName = "";
-        public String type = "";
+        public HazardType type;
         public String primaryEffect = "";
         public String alternativeEffect = "";
         public String flavor = "";
@@ -43,7 +43,7 @@ namespace STMG {
 
             numberInDeck = Int32.Parse(numberInDeckNode.InnerText);
             this.cardName = nameNode.InnerText;
-            type = typeNode.InnerText;
+            type = (HazardType)Enum.Parse(typeof(HazardType), typeNode.InnerText.ToUpper());
             primaryEffect = primaryNode.InnerText;
             alternativeEffect = alternitiveNode.InnerText;
             flavor = flavorNode.InnerText;

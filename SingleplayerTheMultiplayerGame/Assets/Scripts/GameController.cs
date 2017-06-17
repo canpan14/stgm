@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace STMG {
     public enum Direction { NORTH, EAST, SOUTH, WEST };
+    public enum HazardType { TRAP, OBSTRUCTION, NATURALDISASTER, SPELL }
     public class GameController : MonoBehaviour {
 
         private Board gameBoard;

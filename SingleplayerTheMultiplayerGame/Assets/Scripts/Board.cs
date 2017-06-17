@@ -33,7 +33,6 @@ namespace STMG {
                     GameObject tile = (GameObject)Instantiate(tiles);
                     tile.transform.parent = this.gameObject.transform;
                     tile.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-                    //tile.GetComponent<RectTransform>().localPosition = new Vector3(startingXLocation, startingYLocation, 0);
                     tile.GetComponent<RectTransform>().localPosition = new Vector3(newXLocation, newYLocation, 0);
                 }
             }
@@ -44,29 +43,9 @@ namespace STMG {
         }
 
         public void addCardToTile(int x, int y, HazardCard cardToAdd, Direction directionFacing) {
-            // Impliment directionFacing later using enum or something better
             BoardTile tileToAddTo = gameBoard[x, y];
             tileToAddTo.addCardHere(cardToAdd, directionFacing);
             gameBoard[x, y] = tileToAddTo;
-        }
-
-        public void printBoard() {
-            Console.Write("Current Game Board" + Environment.NewLine);
-
-            int rowLength = gameBoard.GetLength(0);
-            int colLength = gameBoard.GetLength(1);
-
-            for (int i = 0; i < rowLength; i++) {
-                for (int j = 0; j < colLength; j++) {
-                    if (gameBoard[j, i].objectsOnTile.Count > 0) {
-                        Console.Write(string.Format("{0} ", "1"));
-                    } else {
-                        Console.Write(string.Format("{0} ", "0"));
-                    }
-                }
-                Console.Write(Environment.NewLine + Environment.NewLine);
-            }
-            Console.ReadLine();
         }
     }
 }
