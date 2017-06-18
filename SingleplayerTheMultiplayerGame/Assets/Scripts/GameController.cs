@@ -15,9 +15,10 @@ namespace STMG {
         private List<Player> players = new List<Player>();
         private List<Player> currentHazardPlayers = new List<Player>();
         private List<Player> currentPlayer = new List<Player>();
-        private TheSubject theSubject = new TheSubject();
         private Player currentSubjectPlayer;
         private Player currentHazardPlayerPlaying;
+        private int[] currentSubjectLocation = { 2, 2 };
+        private GameObject theSubject;
 
         private int currentCycleInRound = 0;
         private int hazardTurnsPassedInCurrentCycle = 0;
@@ -29,6 +30,9 @@ namespace STMG {
         private const int STARTING_HAZARD_HAND_SIZE = 5;
         private const int ROUND_INCOME = 3;
 
+        public GameObject theSubjectPrefab;
+        public int boardHeight = 5;
+        public int boardWidth = 5;
         public Text columnText;
         public Text rowText;
         public Text directionFacingText;
@@ -36,22 +40,70 @@ namespace STMG {
         public Text theCurrentHazardText;
 
         private void Start() {
+            // Find already created board
+            gameBoard = GameObject.FindGameObjectWithTag("Board").GetComponent<Board>();
+            // Create The Subject
+            theSubject = Instantiate(theSubjectPrefab);
             createNewGame(4);
+        }
+
+        private void Update() {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                int newY = currentSubjectLocation[1] - 1;
+                if (newY >= 0) {
+                    currentSubjectLocation[1] = newY;
+                    moveTheSubject();
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                int newY = currentSubjectLocation[1] + 1;
+                if (newY < boardHeight) {
+                    currentSubjectLocation[1] = newY;
+                    moveTheSubject();
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+                int newX = currentSubjectLocation[0] - 1;
+                if (newX >= 0) {
+                    currentSubjectLocation[0] = newX;
+                    moveTheSubject();
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                int newX = currentSubjectLocation[0] + 1;
+                if (newX < boardWidth) {
+                    currentSubjectLocation[0] = newX;
+                    moveTheSubject();
+                }
+            }
         }
 
         public void createNewGame(int numPlayers) {
             // Setup
-            gameBoard = new Board(5, 5);
-            createHazardDeck();
-            createPlayerDeck();
-            createPlayers(numPlayers);
-            randomTurnOrder();
-            fillPlayerHands();
-            Debug.Log("Inital Turn Order: " + players[0].playerName + ", " + players[1].playerName + ", " + players[2].playerName + ", " + players[3].playerName);
-            // Start things going
-            roundStart();
-            cycleStart();
-            hazardTurnStart();
+            // Board selfcreates
+            placeTheSubject();
+            //createHazardDeck();
+            //createPlayerDeck();
+            //createPlayers(numPlayers);
+            //randomTurnOrder();
+            //fillPlayerHands();
+            //Debug.Log("Inital Turn Order: " + players[0].playerName + ", " + players[1].playerName + ", " + players[2].playerName + ", " + players[3].playerName);
+            //// Start things going
+            //roundStart();
+            //cycleStart();
+            //hazardTurnStart();
+        }
+
+        private void placeTheSubject() {
+            // For now hard code to center of 5 x 5 board
+            gameBoard.moveTheSubjectToTile(2, 2, theSubject);
+            theSubject.transform.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+            currentSubjectLocation[0] = 2;
+            currentSubjectLocation[1] = 2;
+        }
+
+        private void moveTheSubject() {
+            gameBoard.moveTheSubjectToTile(currentSubjectLocation[0], currentSubjectLocation[1], theSubject);
         }
 
         public void playCardClicked() {
@@ -64,7 +116,7 @@ namespace STMG {
 
         private void hazardTurnEnd() {
             hazardTurnsPassedInCurrentCycle++;
-            if(hazardTurnsPassedInCurrentCycle >= players.Count - 1) {
+            if (hazardTurnsPassedInCurrentCycle >= players.Count - 1) {
                 cycleEnd();
             } else {
                 hazardTurnStart();
@@ -83,7 +135,7 @@ namespace STMG {
             theCurrentSubjectText.text = "Subject: " + currentSubjectPlayer.playerName;
         }
 
-        private void hazardTurnStart() {            
+        private void hazardTurnStart() {
             currentHazardPlayerPlaying = players[(currentCycleInRound + 1 + hazardTurnsPassedInCurrentCycle) % players.Count];
             currentHazardPlayerPlaying.hazardHand.Add(hazardDeck.drawCard());
             theCurrentHazardText.text = "Hazard Player: " + currentHazardPlayerPlaying.playerName;
@@ -95,7 +147,7 @@ namespace STMG {
         private void cycleEnd() {
             hazardTurnsPassedInCurrentCycle = 0;
             currentCycleInRound++;
-            if(currentCycleInRound >= players.Count) {
+            if (currentCycleInRound >= players.Count) {
                 roundEnd();
             } else {
                 cycleStart();
@@ -112,7 +164,7 @@ namespace STMG {
         private void playHazardCard(HazardCard chosenCard, int columnToPlayIn, int rowToPlayIn, Direction chosenDirection) {
             gameBoard.addCardToTile(columnToPlayIn - 1, rowToPlayIn - 1, chosenCard, chosenDirection);
         }
-        
+
         private void removeCardFromHand(HazardCard cardToRemove) {
             currentHazardPlayerPlaying.hazardHand.Remove(cardToRemove);
         }
